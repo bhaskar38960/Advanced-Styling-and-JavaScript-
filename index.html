@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Page</title>
+    <style>
+        /* Responsive Design */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+            .container { width: 750px; }
+        }
+        @media (min-width: 992px) {
+            .container { width: 970px; }
+        }
+        @media (min-width: 1200px) {
+            .container { width: 1170px; }
+        }
+
+        /* Carousel */
+        .carousel-image {
+            width: 80%;
+            max-height: 400px;
+            display: none;
+            margin: auto;
+        }
+
+        /* Quiz */
+        #quiz {
+            margin-top: 20px;
+        }
+        .choice {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+        }
+        .choice:hover {
+            background-color: #0056b3;
+        }
+
+        /* API Data */
+        #data {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to the Interactive Web Page</h1>
+
+        <!-- Image Carousel -->
+        <div id="carousel">
+            <img src="download.jpeg" class="carousel-image" alt="Image 1">
+            <img src="download.png" class="carousel-image" alt="Image 2">
+            <img src="images.jpeg" class="carousel-image" alt="Image 3">
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz">
+            <h2>Simple Quiz</h2>
+            <div id="question">What is 2 + 2?</div>
+            <div id="choices">
+                <button class="choice">3</button>
+                <button class="choice">4</button>
+                <button class="choice">5</button>
+                <button class="choice">6</button>
+            </div>
+        </div>
+
+        <!-- API Data Section -->
+        <div id="data">Fetching data...</div>
+    </div>
+
+    <script>
+        // Image Carousel Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentImageIndex = 0;
+            const images = document.querySelectorAll('.carousel-image');
+            images.forEach(img => img.style.display = 'none');
+            images[currentImageIndex].style.display = 'block';
+
+            setInterval(() => {
+                images[currentImageIndex].style.display = 'none';
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                images[currentImageIndex].style.display = 'block';
+            }, 3000);
+        });
+
+        // Quiz Interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const choices = document.querySelectorAll('.choice');
+            choices.forEach(choice => {
+                choice.addEventListener('click', function() {
+                    alert('You selected: ' + this.textContent);
+                });
+            });
+        });
+
+        // API Data Fetching
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://jsonplaceholder.typicode.com/users')  
+                .then(response => response.json())
+                .then(data => {
+                    const dataDiv = document.getElementById('data');
+                    dataDiv.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+
+</body>
+</html>
+
+<!--Advanced Styling and JavaScript
+/*to use js and css and html to creat and Interactive Web Page,Simple Quiz*/-->
